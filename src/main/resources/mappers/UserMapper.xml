@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mislab.demo.dao.UserDao">
+    <resultMap id="User" type="com.mislab.demo.domain.entity.User">
+        <result property="userId" column="userId" jdbcType="INTEGER"/>
+        <result property="identifier" column="identifier" jdbcType="INTEGER"/>
+        <result property="userName" column="userName" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="mail" column="mail" jdbcType="VARCHAR"/>
+        <result property="headUrl" column="headUrl" jdbcType="VARCHAR"/>
+        <result property="predictNum" column="predictNum" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="login" resultMap="User" resultType="com.mislab.demo.domain.entity.User">
+        select userId
+        from user where userName = #{userName} and password = #{password}
+    </select>
+
+    <insert id="register">
+        insert into user(identifier, userName, password, sex, age, mail, predictNum)
+        values (#{identifier},#{userName},#{password},#{sex},#{age},#{mail},#{predictNum})
+    </insert>
+
+    <select id="selectUserByUserId" resultMap="User" resultType="com.mislab.demo.domain.entity.User">
+        select *
+        from user
+        where userId = #{userId}
+    </select>
+
+    <update id="updatePasswordByUserId">
+        update user set password = #{password}
+        where userId = #{userId}
+    </update>
+
+    <update id="updateUserInfo">
+        update user set userName = #{userName},sex = #{sex},age = #{age},headUrl = #{headUrl}
+        where userId = #{userId}
+    </update>
+
+    <select id="countUserNum" resultType="java.lang.Integer">
+        select count(*) as c from user
+    </select>
+
+    <select id="selectUserByUserName" resultType="com.mislab.demo.domain.entity.User">
+        select userName
+        from user
+        where userName = #{userName}
+    </select>
+
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mislab.demo.dao.PredictionDao">
+    <resultMap id="Prediction" type="com.mislab.demo.domain.entity.Prediction">
+        <result property="predictionId" column="predictionId" jdbcType="INTEGER"/>
+        <result property="userId" column="userId" jdbcType="INTEGER"/>
+        <result property="adviceId" column="adviceId" jdbcType="INTEGER"/>
+        <result property="diseaseProb" column="diseaseProb" jdbcType="FLOAT"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="height" column="height" jdbcType="FLOAT"/>
+        <result property="weight" column="weight" jdbcType="FLOAT"/>
+        <result property="alb" column="alb" jdbcType="FLOAT"/>
+        <result property="ca" column="ca" jdbcType="FLOAT"/>
+        <result property="p" column="p" jdbcType="FLOAT"/>
+        <result property="alp" column="alp" jdbcType="FLOAT"/>
+        <result property="hb" column="hb" jdbcType="FLOAT"/>
+        <result property="lym" column="lym" jdbcType="FLOAT"/>
+        <result property="bmd" column="bmd" jdbcType="FLOAT"/>
+        <result property="predictTime" column="predictTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="PredictionSimPo" type="com.mislab.demo.domain.po.PredictionSimplePo">
+        <result property="predictionId" column="predictionId" jdbcType="INTEGER"/>
+        <result property="diseaseProb" column="diseaseProb" jdbcType="FLOAT"/>
+        <result property="predictTime" column="predictTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectPredictionById" resultMap="Prediction" resultType="com.mislab.demo.domain.entity.Prediction">
+        select userId,adviceId,age,sex,diseaseProb,height,weight,DATE_FORMAT(predictTime,'%Y-%m-%d %H:%i:%s') as predictTime
+        from prediction where predictionId = #{predictionId}
+    </select>
+
+    <select id="selectSimPredictionByUserId" resultMap="PredictionSimPo" resultType="com.mislab.demo.domain.po.PredictionSimplePo">
+        select DATE_FORMAT(predictTime,'%Y-%m-%d %H:%i:%s') as predictTime,diseaseProb,predictionId
+        from prediction where userId = #{userId}
+    </select>
+
+    <select id="countPredictionNumByUserId" resultType="java.lang.Integer">
+        select count(*) as c from prediction where userId = #{userId}
+    </select>
+
+    <select id="countPredictionNumByTime" resultType="java.lang.Integer">
+        select count(*) as c from prediction where date_sub(current_timestamp(),INTERVAL 1 year ) &lt; predictTime
+    </select>
+
+</mapper>

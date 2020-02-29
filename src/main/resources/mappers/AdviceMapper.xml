@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mislab.demo.dao.AdviceDao">
+    <resultMap id="Advice" type="com.mislab.demo.domain.entity.Advice">
+        <result property="adviceId" column="adviceId" jdbcType="INTEGER"/>
+        <result property="advice" column="advice" jdbcType="VARCHAR"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectAdviceById" resultType="com.mislab.demo.domain.po.AdvicePo">
+        select advice,level
+        from advice where adviceId = #{adviceId}
+    </select>
+
+    <insert id="addAdvice" parameterType="com.mislab.demo.domain.entity.Advice">
+        insert into advice(level, advice)
+        values (#{level},#{advice})
+    </insert>
+
+    <update id="updateAdvice">
+        update advice set level = #{level},advice = #{advice}
+        where adviceId = #{adviceId}
+    </update>
+
+    <delete id="deleteAdviceById">
+        delete from advice
+        where adviceId = #{adviceId}
+    </delete>
+
+    <select id="selectAllAdvice" resultType="com.mislab.demo.domain.entity.Advice">
+        select *
+        from advice
+    </select>
+
+
+</mapper>

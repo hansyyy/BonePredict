@@ -1,0 +1,41 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /BonePredict
+
+swagger2:
+  enable: true
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/BonePredict?characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: hansiyue1!
+  redis:
+    password:
+    host: 127.0.0.1
+    port: 6379
+  session:
+    store-type: redis
+
+  mail:
+    host: smtp.qq.com
+    username: 975444913@qq.com
+    password: aeyzvqsrqrysbajg
+    default-encoding: UTF-8
+    port: 587
+    properties:
+      mail:
+        smtp:
+          socketFactory.class: javax.net.ssl.SSLSocketFactory
+        debug: true
+  thymeleaf:
+    prefix: classpath:/static/
+
+mybatis:
+  mapper-locations: classpath*:mappers/*.xml
+  configuration:
+    cache-enabled: true
+    call-setters-on-nulls: true
+
